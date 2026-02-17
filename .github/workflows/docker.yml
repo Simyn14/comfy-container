@@ -3,7 +3,7 @@ name: docker-build
 on:
   push:
     branches: [ "main" ]
-    tag: [ "*" ]
+    tags: [ "*" ]
   pull_request:
 
 jobs:
@@ -35,9 +35,10 @@ jobs:
         with:
           context: .
           push: true
+          sbom: false
+          provenance: false
+          platforms: linux/amd64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
 
       
