@@ -1,4 +1,4 @@
-FROM docker.io/pytorch/pytorch:2.10.0-cuda12.8-cudnn9-runtime
+FROM python:3.13-slim
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHONUNBUFFERED=1
@@ -6,9 +6,11 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /app
 
 RUN apt-get update && \
-    apt-get install -y git ffmpeg libgl1 libglib2.0-0 python3-pip && \
+    apt-get install -y --no-install-recommends git && \
     rm -rf /var/lib/apt/lists/*
-RUN git clone  --depth 1 https://github.com/Comfy-Org/ComfyUI.git .
+RUN git clone --depth 1 https://github.com/Comfy-Org/ComfyUI.git .
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir --prefer-binary -r requirements.txt
 RUN mkdir -p /data/models /data/output /data/input /data/custom_nodes
