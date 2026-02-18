@@ -11,7 +11,7 @@ RUN apt-get update && \
 RUN git clone --depth 1 https://github.com/Comfy-Org/ComfyUI.git .
 RUN pip install --break-system-packages --no-cache-dir --upgrade pip && \
     pip install --break-system-packages --no-cache-dir -r requirements.txt
-RUN mkdir -p /data
+RUN mkdir -p /data/{models,output,input,custom_nodes}
 
 EXPOSE 8188
 ENTRYPOINT ["python", "main.py", \
