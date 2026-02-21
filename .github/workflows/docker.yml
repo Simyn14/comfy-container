@@ -2,9 +2,7 @@ name: docker-build
 
 on:
   push:
-    branches: [ "main" ]
-    tags: [ "*" ]
-  pull_request:
+    branches: [ "2.10.0-cu13.0" ]
 
 jobs:
   build:
@@ -26,9 +24,7 @@ jobs:
         with:
           images: ghcr.io/${{ github.repository }}
           tags: |
-            type=raw,value=latest
-            type=ref,event=tag
-            type=sha
+            type=raw,value=2.10.0-cu13.0
         id: meta
       - name: Build & Push
         uses: docker/build-push-action@v5
