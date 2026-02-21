@@ -18,7 +18,7 @@ RUN mkdir -p /data/{models,output,input,custom_nodes}
 # Setup Custom Nodes
 ## Setup ComfyUI-Manager
 WORKDIR /data/custom_nodes
-RUN git clone --depth 1 https://github.com/Comfy-Org/ComfyUI-Manager.git .
+RUN git clone --depth 1 https://github.com/Comfy-Org/ComfyUI-Manager.git
 RUN pip install --break-system-packages --no-cache-dir -r ComfyUI-Manager/requirements.txt
 
 EXPOSE 8188
