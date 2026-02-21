@@ -16,10 +16,16 @@ RUN pip install --break-system-packages --no-cache-dir --upgrade pip && \
 RUN mkdir -p /data/{models,output,input,custom_nodes}
 
 # Setup Custom Nodes
-## Setup ComfyUI-Manager
 WORKDIR /data/custom_nodes
+## Setup ComfyUI-Manager
 RUN git clone --depth 1 https://github.com/Comfy-Org/ComfyUI-Manager.git
 RUN pip install --break-system-packages --no-cache-dir -r ComfyUI-Manager/requirements.txt
+## Setup ComfyUI-Lora-Manager
+RUN git clone --depth 1 https://github.com/willmiao/ComfyUI-Lora-Manager
+RUN pip install --break-system-packages --no-cache-dir -r ComfyUI-Lora-Manager/requirements.txt
+## Setup Crystools
+RUN git clone --depth 1 https://github.com/crystian/ComfyUI-Crystools
+RUN pip install --break-system-packages --no-cache-dir -r ComfyUI-Crystools/requirements.txt
 
 # Run app
 WORKDIR /app
