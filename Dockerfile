@@ -1,4 +1,4 @@
-FROM pytorch/pytorch:2.10.0-cuda12.8-cudnn9-runtime
+FROM pytorch/pytorch:2.10.0-cuda13.0-cudnn9-runtime
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHONUNBUFFERED=1
@@ -14,6 +14,6 @@ RUN pip install --break-system-packages --no-cache-dir --upgrade pip && \
 RUN mkdir -p /data/{models,output,input,custom_nodes}
 
 EXPOSE 8188
-ENTRYPOINT ["python", "main.py", \
-            "--listen", "0.0.0.0", "--port", "8188", \
-            "--base-directory", "/data"]
+CMD ["python", "main.py", \
+     "--listen", "0.0.0.0", "--port", "8188", \
+     "--base-directory", "/data"]
