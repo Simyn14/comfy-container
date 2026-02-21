@@ -21,6 +21,8 @@ WORKDIR /data/custom_nodes
 RUN git clone --depth 1 https://github.com/Comfy-Org/ComfyUI-Manager.git
 RUN pip install --break-system-packages --no-cache-dir -r ComfyUI-Manager/requirements.txt
 
+# Run app
+WORKDIR /app
 EXPOSE 8188
 CMD ["python", "main.py", \
      "--listen", "0.0.0.0", "--port", "8188", \
