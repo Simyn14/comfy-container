@@ -13,7 +13,7 @@ WORKDIR /app
 RUN git clone --depth 1 https://github.com/Comfy-Org/ComfyUI.git .
 RUN pip install --break-system-packages --no-cache-dir --upgrade pip && \
     pip install --break-system-packages --no-cache-dir -r requirements.txt
-RUN mkdir -p /data/{models,output,input,custom_nodes}
+RUN mkdir -p /data/input /data/output /data/models /data/custom_nodes
 
 # Setup Custom Nodes
 WORKDIR /data/custom_nodes
