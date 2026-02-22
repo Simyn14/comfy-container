@@ -1,34 +1,26 @@
 FROM pytorch/pytorch:2.10.0-cuda13.0-cudnn9-runtime
 
-ENV DEBIAN_FRONTEND=noninteractive
+ENV PATH="/venv/bin:$PATH"
 ENV PYTHONUNBUFFERED=1
+ENV DEBIAN_FRONTEND=noninteractive
 
-# System updates
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends git && \
+# System updates and setup environment
+RUN apt-get update && apt-get install -y --no-install-recommends git python3-venv && \
+    mkdir -p /app /data/input /data/output /data/models /data/custom_nodes && \
+    python3 -m venv /venv && pip install --no-cache-dir --upgrade pip && \
     rm -rf /var/lib/apt/lists/*
+
+# Setup ComfyUI Manager
+WORKDIR /data/custom_nodes
+RUN git clone --depth 1 https://github.com/Comfy-Org/ComfyUI-Manager.git && \
+    pip install --no-cache-dir -r ComfyUI-Manager/requirements.txt
 
 # Setup ComfyUI
 WORKDIR /app
-RUN git clone --depth 1 https://github.com/Comfy-Org/ComfyUI.git .
-RUN pip install --break-system-packages --no-cache-dir --upgrade pip && \
-    pip install --break-system-packages --no-cache-dir -r requirements.txt
-RUN mkdir -p /data/input /data/output /data/models /data/custom_nodes
-
-# Setup Custom Nodes
-WORKDIR /data/custom_nodes
-## Setup ComfyUI-Manager
-RUN git clone --depth 1 https://github.com/Comfy-Org/ComfyUI-Manager.git
-RUN pip install --break-system-packages --no-cache-dir -r ComfyUI-Manager/requirements.txt
-## Setup ComfyUI-Lora-Manager
-RUN git clone --depth 1 https://github.com/willmiao/ComfyUI-Lora-Manager
-RUN pip install --break-system-packages --no-cache-dir -r ComfyUI-Lora-Manager/requirements.txt
-## Setup Crystools
-RUN git clone --depth 1 https://github.com/crystian/ComfyUI-Crystools
-RUN pip install --break-system-packages --no-cache-dir -r ComfyUI-Crystools/requirements.txt
+RUN git clone --depth 1 https://github.com/Comfy-Org/ComfyUI.git . && \
+    pip install --no-cache-dir -r requirements.txt
 
 # Run app
-WORKDIR /app
 EXPOSE 8188
 CMD ["python", "main.py", \
      "--listen", "0.0.0.0", "--port", "8188", \
