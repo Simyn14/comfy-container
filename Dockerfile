@@ -7,7 +7,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 # System updates and setup environment
 RUN apt-get update && apt-get install -y --no-install-recommends git python3-venv && \
     mkdir -p /app /data/input /data/output /data/models /data/custom_nodes && \
-    python3 -m venv /venv && pip install --no-cache-dir --upgrade pip && \
+    python3 -m venv /venv --system-site-packages && \
+    pip install --no-cache-dir --upgrade pip && \
     rm -rf /var/lib/apt/lists/*
 
 # Setup ComfyUI Manager
