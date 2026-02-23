@@ -5,8 +5,7 @@ ENV PYTHONUNBUFFERED=1
 
 # System updates and setup environment
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    git python3-venv libxcb1 libxcb-render0 libxcb-shm0 \
-    libxcb-xfixes0 libxrender1 libsm6 libxext6 libgl1 && \
+    git python3-venv build-essential ffmpeg libgl1 libglib2.0-0 libomp-dev && \
     python3 -m venv /venv --system-site-packages && \
     pip install --no-cache-dir --upgrade pip && \
     rm -rf /var/lib/apt/lists/*
